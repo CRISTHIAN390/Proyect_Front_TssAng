@@ -23,6 +23,8 @@ import { SidebarComponent } from './layouts/full/sidebar/sidebar.component';
 import { HeaderComponent } from './layouts/full/header/header.component';
 import { BrandingComponent } from './layouts/full/sidebar/branding.component';
 import { AppNavItemComponent } from './layouts/full/sidebar/nav-item/nav-item.component';
+import { CommonModule } from '@angular/common'; // Para *ngFor, *ngIf
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 @NgModule({
   declarations: [
@@ -31,11 +33,14 @@ import { AppNavItemComponent } from './layouts/full/sidebar/nav-item/nav-item.co
     BlankComponent,
     SidebarComponent,
     HeaderComponent,
+
     BrandingComponent,
     AppNavItemComponent,
   ],
   imports: [
+    NgApexchartsModule,
     BrowserModule,
+    CommonModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
