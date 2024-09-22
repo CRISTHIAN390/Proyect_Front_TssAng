@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../services/usuarios.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserModel } from '../../models/user.model';
 
 @Component({
   selector: 'app-usuarios-list',
@@ -8,11 +9,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./usuarios-list.component.scss']
 })
 export class UsersListComponent implements OnInit {
-  users: any = [];
-  modalDeleteVisible: boolean = false;
-  selectedUser: any = null;
+  users: UserModel[] = [];
+  modalDeleteVisible = false;
+  selectedUser: UserModel | null = null;
   modalUserVisible = false;
-  isCreating: boolean = false;
+  isCreating = false;
   userForm: FormGroup;
   isEditMode = false;
 
@@ -21,14 +22,11 @@ export class UsersListComponent implements OnInit {
     private fb: FormBuilder,
   ) {
     this.userForm = this.fb.group({
-      username: ['', [Validators.required, Validators.minLength(4)]],
+      first_name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', []],
-      role: ['', Validators.required]
-    });
-
-    this.userForm.patchValue({
-      role: 1
+      phone: ['', []],
+      DNI: ['', []],
+      role_id: [1, Validators.required] // Asumiendo que 1 es un valor por defecto
     });
   }
 
@@ -37,9 +35,54 @@ export class UsersListComponent implements OnInit {
   }
 
   listUsers() {
-    this.userService.list().subscribe((resp: any) => {
-      this.users = resp.data;
-      console.log(this.users);
-    });
+    this.userService.list().subscribe(
+      (resp: any) => {
+        this.users = resp.data;
+      },
+      (error) => {
+        console.error('Error al cargar los usuarios', error);
+      }
+    );
+  }
+
+  editUser(user: UserModel) {
+    this.selectedUser = user;
+    this.isEditMode = true;
+    this.userForm.patchValue(user); // Rellenar el formulario con los datos del usuario
+    this.modalUserVisible = true; // Mostrar el modal para editar
+  }
+
+  deleteUser(user: UserModel) {
+    this.selectedUser = user;
+    this.modalDeleteVisible = true; // Mostrar el modal de confirmación de eliminación
+  }
+
+  // Método para crear o actualizar un usuario según el modo
+  submitForm() {
+    if (this.isEditMode) {
+      // Lógica para actualizar el usuario
+    } else {
+      // Lógica para crear un nuevo usuario
+    }
+    this.userForm.reset();
+    this.modalUserVisible = false; // Cerrar el modal después de la acción
+  }
+  // Agrega este método en tu clase UsersListComponent
+confirmDelete() {
+  if (this.selectedUser) {
+    this.userService.delete(this.selectedUser.id).subscribe(
+      () => {
+        // Actualiza la lista de usuarios después de eliminar
+        this.listUsers();
+        this.modalDeleteVisible = false; // Cierra el modal
+        this.selectedUser = null; // Reinicia el usuario seleccionado
+      },
+      (error) => {
+        console.error('Error al eliminar el usuario', error);
+      }
+    );
   }
 }
+}
+  // Agrega métodos para crear, editar y eliminar usuarios según sea necesario.
+

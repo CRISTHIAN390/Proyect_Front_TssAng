@@ -7,7 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { MatTableModule } from '@angular/material/table';
 // icons
 import { TablerIconsModule } from 'angular-tabler-icons';
 import * as TablerIcons from 'angular-tabler-icons/icons';
@@ -23,6 +23,7 @@ import { ComponentsRoutes } from './componentes.routing';
     MatCardModule,
     MatInputModule,
     MatCheckboxModule,
+    MatTableModule,
     MatButtonModule,
     FormsModule,
     ReactiveFormsModule,

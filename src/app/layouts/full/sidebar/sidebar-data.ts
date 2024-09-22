@@ -12,18 +12,42 @@ export const navItems: NavItem[] = [
   {
     navCap: 'Ui Components',
   },
+
+
+
+  //COMPONENTES A USAR
   {
-    displayName: 'Badge',
+    displayName: 'Usuarios',
+    iconName: 'user-plus',
+    route: '/components/usuarioslist',  // Actualiza la ruta aquí
+  },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  {
+    displayName: 'Vehiculos',
     iconName: 'rosette',
     route: '/ui-components/badge',
   },
   {
-    displayName: 'Chips',
+    displayName: 'Almacen',
     iconName: 'poker-chip',
     route: '/ui-components/chips',
   },
   {
-    displayName: 'Lists',
+    displayName: 'Reportes',
     iconName: 'list',
     route: '/ui-components/lists',
   },
@@ -41,17 +65,5 @@ export const navItems: NavItem[] = [
     iconName: 'user-plus',
     route: '/authentication/register',
   },
-
-  {
-    navCap: 'Componentes',
-  },
-  //Extra
-  {
-    displayName: 'Usuarios',
-    iconName: 'user-plus',
-    route: '/components/usuarioslist',  // Actualiza la ruta aquí
-  },
-
-
 
 ];
