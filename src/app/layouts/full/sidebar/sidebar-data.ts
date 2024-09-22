@@ -27,16 +27,7 @@ export const navItems: NavItem[] = [
     iconName: 'list',
     route: '/ui-components/lists',
   },
-  {
-    displayName: 'Menu',
-    iconName: 'layout-navbar-expand',
-    route: '/ui-components/menu',
-  },
-  {
-    displayName: 'Tooltips',
-    iconName: 'tooltip',
-    route: '/ui-components/tooltips',
-  },
+
   {
     navCap: 'Auth',
   },
@@ -50,20 +41,15 @@ export const navItems: NavItem[] = [
     iconName: 'user-plus',
     route: '/authentication/register',
   },
-  {
-    navCap: 'Extra',
-  },
-  {
-    displayName: 'Icons',
-    iconName: 'mood-smile',
-    route: '/extra/icons',
-  },
 
+  {
+    navCap: 'Componentes',
+  },
   //Extra
   {
     displayName: 'Usuarios',
     iconName: 'user-plus',
-    route: '/usuarios',
+    route: '/components/usuarioslist',  // Actualiza la ruta aquí
   },
 
 

@@ -26,6 +26,9 @@ import { AppNavItemComponent } from './layouts/full/sidebar/nav-item/nav-item.co
 import { CommonModule } from '@angular/common'; // Para *ngFor, *ngIf
 import { NgApexchartsModule } from 'ng-apexcharts';
 
+
+//EXTRA
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +36,6 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     BlankComponent,
     SidebarComponent,
     HeaderComponent,
-
     BrandingComponent,
     AppNavItemComponent,
   ],
@@ -49,7 +51,8 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     MaterialModule,
     TablerIconsModule.pick(TablerIcons),
   ],
-  exports: [TablerIconsModule],
+  exports: [
+    TablerIconsModule],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
