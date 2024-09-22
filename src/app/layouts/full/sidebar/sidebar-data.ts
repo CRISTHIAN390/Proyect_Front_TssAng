@@ -37,17 +37,17 @@ export const navItems: NavItem[] = [
 
 
   {
-    displayName: 'Vehiculos',
+    displayName: 'Vehiculos',//badge
     iconName: 'rosette',
     route: '/ui-components/badge',
   },
   {
-    displayName: 'Almacen',
+    displayName: 'Almacen',//chips
     iconName: 'poker-chip',
     route: '/ui-components/chips',
   },
   {
-    displayName: 'Reportes',
+    displayName: 'Reportes',//lists
     iconName: 'list',
     route: '/ui-components/lists',
   },

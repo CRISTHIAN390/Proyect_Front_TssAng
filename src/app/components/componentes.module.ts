@@ -11,17 +11,19 @@ import { MatTableModule } from '@angular/material/table';
 // icons
 import { TablerIconsModule } from 'angular-tabler-icons';
 import * as TablerIcons from 'angular-tabler-icons/icons';
-
+import { MatNativeDateModule } from '@angular/material/core';
 import { UsersListComponent } from './usuarios/usuarios-list/usuarios-list.component';
 import { ComponentsRoutes } from './componentes.routing';
-
+import { MaterialModule } from '../material.module';
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild(ComponentsRoutes), // Usa las rutas configuradas
     MatIconModule,
+    MaterialModule,
     MatCardModule,
     MatInputModule,
+    MatNativeDateModule,
     MatCheckboxModule,
     MatTableModule,
     MatButtonModule,
