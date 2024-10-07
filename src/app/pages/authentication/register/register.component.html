@@ -1,55 +1,75 @@
 <div class="blank-layout-container justify-content-center align-items-center bg-light-primary">
-  <div
-    class="position-relative row w-100 h-100 bg-gredient justify-content-center"
-  >
+  <div class="position-relative row w-100 h-100 bg-gredient justify-content-center">
     <div class="col-lg-4 d-flex align-items-center">
       <mat-card class="cardWithShadow boxed-auth">
         <mat-card-content class="p-32">
           <div class="text-center">
             <a [routerLink]="['/dashboard']">
-
-              <img src="./assets/images/logos/logo.jpg" class="align-middle m-2 img-circle" alt="logo" style="width: 80px; height: 80px; border-radius: 50%;" />
+              <img src="./assets/images/logos/logo.jpg" class="align-middle m-2 img-circle" alt="logo"
+                   style="width: 80px; height: 80px; border-radius: 50%;" />
             </a>
           </div>
 
-
           <div class="or-border m-t-30">Registrar</div>
 
-          <form class="m-t-30">
-            <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
-              >Name</mat-label
-            >
+          <form [formGroup]="usuarioform" (ngSubmit)="onSubmit()" class="m-t-30">
+            <!-- Apellidos -->
             <mat-form-field appearance="outline" class="w-100" color="primary">
-              <input matInput />
-            </mat-form-field>
-            <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
-              >Email Adddress</mat-label
-            >
-            <mat-form-field appearance="outline" class="w-100" color="primary">
-              <input matInput type="email" />
-            </mat-form-field>
-            <!-- password -->
-            <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
-              >Password</mat-label
-            >
-            <mat-form-field appearance="outline" class="w-100" color="primary">
-              <input matInput type="password" />
+              <mat-label>Apellidos</mat-label>
+              <input matInput placeholder="Apellidos" formControlName="apellidos" />
+              <mat-error *ngIf="usuarioform.get('apellidos')?.invalid && usuarioform.get('apellidos')?.touched">
+                Apellidos es requerido.
+              </mat-error>
             </mat-form-field>
 
-            <a [routerLink]="['/']" mat-flat-button color="primary" class="w-100">
-              Sign Up
-            </a>
-            <!-- input -->
+            <!-- Nombres -->
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <mat-label>Nombres</mat-label>
+              <input matInput placeholder="Nombres" formControlName="nombres" />
+              <mat-error *ngIf="usuarioform.get('nombres')?.invalid && usuarioform.get('nombres')?.touched">
+                Nombres es requerido.
+              </mat-error>
+            </mat-form-field>
+
+            <!-- DNI -->
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <mat-label>DNI</mat-label>
+              <input matInput placeholder="DNI" formControlName="dni" />
+              <mat-error *ngIf="usuarioform.get('dni')?.invalid && usuarioform.get('dni')?.touched">
+                DNI es requerido y debe tener 8 dígitos.
+              </mat-error>
+            </mat-form-field>
+
+            <!-- Email -->
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <mat-label>Email</mat-label>
+              <input matInput type="email" placeholder="Email" formControlName="email" />
+              <mat-error *ngIf="usuarioform.get('email')?.invalid && usuarioform.get('email')?.touched">
+                Email es requerido y debe ser válido.
+              </mat-error>
+            </mat-form-field>
+
+            <!-- Password -->
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <mat-label>Password</mat-label>
+              <input matInput type="password" placeholder="Password" formControlName="password" />
+              <mat-error *ngIf="usuarioform.get('password')?.invalid && usuarioform.get('password')?.touched">
+                Password es requerido y debe tener al menos 8 caracteres.
+              </mat-error>
+            </mat-form-field>
+
+            <!-- Botón de registro -->
+            <button type="submit" mat-flat-button color="primary" class="w-100">Registrar</button>
           </form>
-          <span class="d-block f-w-500 text-center m-t-24"
-            >Already have an Account?
 
-            <a
-              [routerLink]="['/authentication/login']"
-              class="text-decoration-none text-primary f-w-500 f-s-14"
-            >
-              Sign In</a
-            >
+          <!-- Mensaje de error -->
+          <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
+
+          <!-- Enlace a iniciar sesión -->
+          <span class="d-block f-w-500 text-center m-t-24">¿Ya tienes una cuenta?
+            <a [routerLink]="['/authentication/login']" class="text-decoration-none text-primary f-w-500 f-s-14">
+              Iniciar sesión
+            </a>
           </span>
         </mat-card-content>
       </mat-card>

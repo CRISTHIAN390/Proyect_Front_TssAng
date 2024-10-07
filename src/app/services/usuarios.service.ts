@@ -8,7 +8,7 @@ import { Observable } from 'rxjs'; // Importa Observable si lo necesitas para la
 })
 export class UserService {
 
-  private apiUrl = environment.apiUrl + "/api/users"; // Corrige la URL base
+  private apiUrl = environment.apiUrl + "/api/usuario"; // Corrige la URL base
 
   constructor(
     private http: HttpClient
