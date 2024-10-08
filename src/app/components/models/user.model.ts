@@ -6,3 +6,9 @@ export interface UserModel {
   celular: number;
   estado: boolean;
 }
+
+export interface UsuarioAcceso {
+  idusuario:number;
+  idrol: number;
+  estado:number;
+}

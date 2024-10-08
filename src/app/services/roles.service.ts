@@ -2,19 +2,19 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
 import { Observable } from 'rxjs'; // Importa Observable si lo necesitas para las respuestas
-import { UsuarioAcceso } from '../components/models/user.model';
+
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class RolService {
 
-  private apiUrl = environment.apiUrl + "/api/usuario"; // Corrige la URL base
+  private apiUrl = environment.apiUrl + "/api/rol"; // Corrige la URL base
 
   constructor(
     private http: HttpClient
   ) { }
 
-  // Listar todos los usuarios
+  // Listar todos los roles
   list(): Observable<any> {
     return this.http.get(`${this.apiUrl}/`);
   }
@@ -29,28 +29,14 @@ export class UserService {
     return this.http.get(`${this.apiUrl}/${userId}`);
   }
 
-  // Listar usuarios por rol
-  getByRole(roleId: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/role/${roleId}`);
-  }
 
-  // Actualizar un usuario
+  // Actualizar un rol
   edit(userId: number, user: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/${userId}`, user);
   }
 
-  // Actualizar solo la contraseña de un usuario
-  updatePassword(userId: number, passwordData: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/Password/${userId}`, passwordData);
-  }
-
-  // Eliminar un usuario
+  // Eliminar un rol
   delete(userId: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${userId}`);
-  }
-
-  // Actualizar solo la contraseña de un usuario
-  actualizar_acceso(userId: number, useracc: UsuarioAcceso): Observable<any> {
-    return this.http.put(`${this.apiUrl}/acceso/${userId}`, useracc);
   }
 }

@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../services/usuarios.service';
+import { RolService } from '../../../services/roles.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserModel } from '../../models/user.model';
+import { UserModel,UsuarioAcceso } from '../../models/user.model';
+import { ChangeDetectorRef } from '@angular/core';
+
 
 @Component({
   selector: 'app-usuarios-list',
@@ -10,81 +13,97 @@ import { UserModel } from '../../models/user.model';
 })
 export class UsersListComponent implements OnInit {
   personas: any = [];
-  users: UserModel[]=[];
+  users: UserModel[] = [];
+  usuarioAcceso: UsuarioAcceso[] = [];
+  roles: any = [];
   filteredUsers: any = [];
   modalDeleteVisible = false;
-  selectedUser: UserModel | null = null;
+  selectedusuario: any = null;
   modalUserVisible = false;
-  isCreating = false;
-  userForm: FormGroup;
-  isEditMode = false;
+  isModalOpen: boolean = false;
+  userForm: FormGroup = this.fb.group({
+    idusuario: [{ value: '', disabled: true }],
+    idrol: 4,
+    estado: 1,
+  });
+
+  //modelo de la promocion
+  userAcceso: UsuarioAcceso = {
+    idusuario: 0,
+    idrol: 0,
+    estado: 1
+  };
 
   constructor(
     public userService: UserService,
+    public rolService: RolService,
     private fb: FormBuilder,
+    private cdr: ChangeDetectorRef
   ) {
-    this.userForm = this.fb.group({
-      first_name: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
-      phone: ['', []],
-      DNI: ['', []],
-      role_id: [1, Validators.required] // Asumiendo que 1 es un valor por defecto
-    });
+
   }
 
   ngOnInit(): void {
+    this.listRoles();
     this.listUsers();
   }
 
   listUsers() {
     this.userService.list().subscribe((resp: any) => {
-        this.personas = resp;
-        this.filteredUsers = resp;
-      },
+      this.personas = resp;
+      this.filteredUsers = resp;
+    },
       (error) => {
         console.error('Error al cargar los usuarios', error);
       }
     );
   }
 
-  editUser(user: UserModel) {
-    this.selectedUser = user;
-    this.isEditMode = true;
-    this.userForm.patchValue(user); // Rellenar el formulario con los datos del usuario
-    this.modalUserVisible = true; // Mostrar el modal para editar
-  }
-
-  deleteUser(user: UserModel) {
-    this.selectedUser = user;
-    this.modalDeleteVisible = true; // Mostrar el modal de confirmación de eliminación
-  }
-
-  // Método para crear o actualizar un usuario según el modo
-  submitForm() {
-    if (this.isEditMode) {
-      // Lógica para actualizar el usuario
-    } else {
-      // Lógica para crear un nuevo usuario
-    }
-    this.userForm.reset();
-    this.modalUserVisible = false; // Cerrar el modal después de la acción
-  }
-  // Agrega este método en tu clase UsersListComponent
-confirmDelete() {
-  if (this.selectedUser) {
-    this.userService.delete(this.selectedUser.idpersona).subscribe(
-      () => {
-        // Actualiza la lista de usuarios después de eliminar
-        this.listUsers();
-        this.modalDeleteVisible = false; // Cierra el modal
-        this.selectedUser = null; // Reinicia el usuario seleccionado
-      },
+  listRoles() {
+    this.rolService.list().subscribe((resp: any) => {
+      this.roles = resp;
+    },
       (error) => {
-        console.error('Error al eliminar el usuario', error);
+        console.error('Error al cargar los roles', error);
       }
     );
   }
+
+
+
+  closeModal() {
+    this.isModalOpen = false;
+    this.selectedusuario = null;
+  }
+
+  openModaleditUser(user: any=null): void{
+    this.isModalOpen = true;
+    this.selectedusuario = user;
+    // Usamos patchValue para cargar los datos
+    this.userForm.patchValue({
+      idusuario: user.idusuario,
+      idrol: user.idrol,
+      estado: user.estado
+    });
+  }
+
+  submitForm() {
+    if (this.userForm.valid) {
+      this.userService.actualizar_acceso(this.selectedusuario.idusuario, this.userForm.value).subscribe(
+        (resp: any) => {
+          const index = this.users.findIndex((clien: any) => clien.idcliente === this.selectedusuario.idusuario);
+          if (index !== -1) {
+            this.users[index] = { ...this.users[index], ...this.userForm.value };
+          }
+          this.closeModal();
+        },
+        (error) => {
+          console.error('Error al actualizar el usuario', error);
+        }
+      );
+    } else {
+      console.error('Formulario inválido');
+    }
+  }
 }
-}
-  // Agrega métodos para crear, editar y eliminar usuarios según sea necesario.
 
