@@ -9,7 +9,9 @@ import { UserModel } from '../../models/user.model';
   styleUrls: ['./usuarios-list.component.scss']
 })
 export class UsersListComponent implements OnInit {
-  users: UserModel[] = [];
+  personas: any = [];
+  users: UserModel[]=[];
+  filteredUsers: any = [];
   modalDeleteVisible = false;
   selectedUser: UserModel | null = null;
   modalUserVisible = false;
@@ -35,9 +37,9 @@ export class UsersListComponent implements OnInit {
   }
 
   listUsers() {
-    this.userService.list().subscribe(
-      (resp: any) => {
-        this.users = resp.data;
+    this.userService.list().subscribe((resp: any) => {
+        this.personas = resp;
+        this.filteredUsers = resp;
       },
       (error) => {
         console.error('Error al cargar los usuarios', error);
@@ -70,7 +72,7 @@ export class UsersListComponent implements OnInit {
   // Agrega este método en tu clase UsersListComponent
 confirmDelete() {
   if (this.selectedUser) {
-    this.userService.delete(this.selectedUser.id).subscribe(
+    this.userService.delete(this.selectedUser.idpersona).subscribe(
       () => {
         // Actualiza la lista de usuarios después de eliminar
         this.listUsers();

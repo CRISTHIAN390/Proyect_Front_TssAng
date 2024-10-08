@@ -1,10 +1,8 @@
 export interface UserModel {
-  id: number;
-  first_name: string;
-  DNI: string;
-  phone: string;
-  email:string;
-  role_id: number;
-  date_created: Date;
-  status: boolean;
+  idpersona: number;
+  apellidos: string;
+  nombres: string;
+  dni: string;
+  celular: number;
+  estado: boolean;
 }
