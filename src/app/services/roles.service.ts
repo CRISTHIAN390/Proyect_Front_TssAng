@@ -15,7 +15,7 @@ export class RolService {
   ) { }
 
   // Listar todos los roles
-  list(): Observable<any> {
+  listarR(): Observable<any> {
     return this.http.get(`${this.apiUrl}/`);
   }
 

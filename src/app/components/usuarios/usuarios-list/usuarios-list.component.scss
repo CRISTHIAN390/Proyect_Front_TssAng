@@ -10,12 +10,16 @@
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1000;
 }
-
+ 
 .modal-content {
   background-color: white;
   padding: 20px;
   border-radius: 8px;
   width: 400px;
+}
+.text-center {
+  text-align: center;
+  vertical-align: middle; /* Opcional, para centrar verticalmente */
 }
 /* Botón verde para 'Activo' */
 .btn-activo {
@@ -52,5 +56,5 @@
 }
 
 .green-button:hover {
-  background-color: #45a049; /* Verde más oscuro al pasar el mouse */
+  background-color: #1c5f1f; /* Verde más oscuro al pasar el mouse */
 }

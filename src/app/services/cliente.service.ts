@@ -5,7 +5,7 @@ import { Observable } from 'rxjs'; // Importa Observable si lo necesitas para la
 @Injectable({
   providedIn: 'root'
 })
-export class ColaboradorService {
+export class ClienteService {
 
   private apiUrl = environment.apiUrl + "/api/cliente"; // Corrige la URL base
 
@@ -13,15 +13,13 @@ export class ColaboradorService {
     private http: HttpClient
   ) { }
 
-  // Listar todos los clientes
+  // Listar todos los cliente
   list(): Observable<any> {
     return this.http.get(`${this.apiUrl}/`);
   }
 
   // Crear un nuevo cliente
-  /*
-  create(user: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/`, user);
+  create(clien: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/`, clien);
   }
-*/
 }

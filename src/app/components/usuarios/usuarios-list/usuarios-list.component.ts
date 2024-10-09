@@ -29,7 +29,6 @@ export class UsersListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.listRoles();
     this.listUsers();
   }
 
@@ -44,7 +43,7 @@ export class UsersListComponent implements OnInit {
   }
 
   listRoles() {
-    this.rolService.list().subscribe((resp: any) => {
+    this.rolService.listarR().subscribe((resp: any) => {
       this.roles = resp;
     },
       (error) => {
@@ -61,6 +60,7 @@ export class UsersListComponent implements OnInit {
 
   openModaleditUser(user: any = null): void {
     //tomar datos los usuarios
+    this.listRoles();
     this.isModalOpen = true;
     this.selectedusuario = user;
 
