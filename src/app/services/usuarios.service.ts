@@ -53,4 +53,5 @@ export class UserService {
   actualizar_acceso(userId: number, useracc: UsuarioAcceso): Observable<any> {
     return this.http.put(`${this.apiUrl}/acceso/${userId}`, useracc);
   }
+
 }

@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../services/usuarios.service';
 import { RolService } from '../../../services/roles.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserModel,UsuarioAcceso } from '../../models/user.model';
-import { ChangeDetectorRef } from '@angular/core';
-
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { UsuarioAcceso } from '../../models/user.model';
 
 @Component({
   selector: 'app-usuarios-list',
@@ -13,34 +11,21 @@ import { ChangeDetectorRef } from '@angular/core';
 })
 export class UsersListComponent implements OnInit {
   personas: any = [];
-  users: UserModel[] = [];
-  usuarioAcceso: UsuarioAcceso[] = [];
   roles: any = [];
-  filteredUsers: any = [];
-  modalDeleteVisible = false;
-  selectedusuario: any = null;
-  modalUserVisible = false;
   isModalOpen: boolean = false;
-  userForm: FormGroup = this.fb.group({
-    idusuario: [{ value: '', disabled: true }],
-    idrol: 4,
-    estado: 1,
-  });
-
-  //modelo de la promocion
-  userAcceso: UsuarioAcceso = {
-    idusuario: 0,
-    idrol: 0,
-    estado: 1
-  };
+  selectedusuario: any = null;
+  userForm: FormGroup;
 
   constructor(
     public userService: UserService,
     public rolService: RolService,
     private fb: FormBuilder,
-    private cdr: ChangeDetectorRef
   ) {
-
+    this.userForm = this.fb.group({
+      idusuario: [''],
+      idrol: [''], // Debe ser un número
+      estado: ['']
+    });
   }
 
   ngOnInit(): void {
@@ -51,7 +36,6 @@ export class UsersListComponent implements OnInit {
   listUsers() {
     this.userService.list().subscribe((resp: any) => {
       this.personas = resp;
-      this.filteredUsers = resp;
     },
       (error) => {
         console.error('Error al cargar los usuarios', error);
@@ -69,32 +53,39 @@ export class UsersListComponent implements OnInit {
     );
   }
 
-
-
   closeModal() {
     this.isModalOpen = false;
     this.selectedusuario = null;
+    this.userForm.reset(); // Reinicia el formulario si es necesario
   }
 
-  openModaleditUser(user: any=null): void{
+  openModaleditUser(user: any = null): void {
+    //tomar datos los usuarios
     this.isModalOpen = true;
     this.selectedusuario = user;
+
     // Usamos patchValue para cargar los datos
     this.userForm.patchValue({
       idusuario: user.idusuario,
       idrol: user.idrol,
-      estado: user.estado
+      estado: user.estado ? '1' : '0', // Convertimos booleano a cadena
     });
   }
 
   submitForm() {
     if (this.userForm.valid) {
-      this.userService.actualizar_acceso(this.selectedusuario.idusuario, this.userForm.value).subscribe(
-        (resp: any) => {
-          const index = this.users.findIndex((clien: any) => clien.idcliente === this.selectedusuario.idusuario);
-          if (index !== -1) {
-            this.users[index] = { ...this.users[index], ...this.userForm.value };
-          }
+      console.log('Valores del formulario:', this.userForm.value); // Agrega esta línea
+      const useracc: UsuarioAcceso = {
+        idusuario: this.userForm.value.idusuario,
+        idrol: this.userForm.value.idrol,
+        estado: this.userForm.value.estado
+      };
+      const userId = this.userForm.value.idusuario;
+  
+      this.userService.actualizar_acceso(userId, useracc).subscribe(
+        response => {
+          console.log('Usuario actualizado:', response);
+          this.listUsers(); 
           this.closeModal();
         },
         (error) => {

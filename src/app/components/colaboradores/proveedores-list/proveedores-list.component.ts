@@ -2,7 +2,7 @@ import { Component, OnInit,ChangeDetectorRef } from '@angular/core';
 import { ProveedorService } from '../../../services/proveedor.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
-  selector: 'app-usuarios-list',
+  selector: 'app-proveedores-list',
   templateUrl: './proveedores-list.component.html',
   styleUrls: ['./proveedores-list.component.scss']
 })

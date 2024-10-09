@@ -17,7 +17,17 @@
   border-radius: 8px;
   width: 400px;
 }
+/* Botón verde para 'Activo' */
+.btn-activo {
+  background-color: #4caf50;  /* Verde */
+  color: white;
+}
 
+/* Botón rojo para 'Bloqueado' */
+.btn-bloqueado {
+  background-color: #f44336;  /* Rojo */
+  color: white;
+}
 .modal-header {
   display: flex;
   justify-content: space-between;
@@ -33,4 +43,14 @@
   display: flex;
   justify-content: flex-end;
   gap: 10px;
+}
+
+
+.green-button {
+  background-color: #4caf50; /* Verde */
+  color: white; /* Texto blanco */
+}
+
+.green-button:hover {
+  background-color: #45a049; /* Verde más oscuro al pasar el mouse */
 }

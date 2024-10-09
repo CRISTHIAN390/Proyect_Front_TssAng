@@ -2,7 +2,7 @@ import { Component, OnInit,ChangeDetectorRef } from '@angular/core';
 import { ColaboradorService } from '../../../services/colaborador.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
-  selector: 'app-usuarios-list',
+  selector: 'app-clientes-list',
   templateUrl: './clientes-list.component.html',
   styleUrls: ['./clientes-list.component.scss']
 })

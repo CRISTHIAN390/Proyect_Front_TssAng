@@ -10,5 +10,5 @@ export interface UserModel {
 export interface UsuarioAcceso {
   idusuario:number;
   idrol: number;
-  estado:number;
+  estado:boolean;
 }
