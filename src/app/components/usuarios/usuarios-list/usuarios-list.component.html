@@ -47,7 +47,8 @@
             <ng-container matColumnDef="options">
               <th mat-header-cell *matHeaderCellDef>Opción</th>
               <td mat-cell *matCellDef="let user">
-                <button mat-button (click)="openModaleditUser(user)">Editar</button>
+                <button mat-flat-button color="accent" (click)="openModaleditUser(user)">Editar</button>
+
               </td>
             </ng-container>
 

@@ -13,7 +13,9 @@ import { TablerIconsModule } from 'angular-tabler-icons';
 import * as TablerIcons from 'angular-tabler-icons/icons';
 import { MatNativeDateModule } from '@angular/material/core';
 import { UsersListComponent } from './usuarios/usuarios-list/usuarios-list.component';
+import { ClientesListComponent } from './colaboradores/clientes-list/clientes-list.component';
 import { ComponentsRoutes } from './componentes.routing';
+import { ProveedoresListComponent } from './colaboradores/proveedores-list/proveedores-list.component';
 import { MaterialModule } from '../material.module';
 @NgModule({
   imports: [
@@ -33,6 +35,8 @@ import { MaterialModule } from '../material.module';
   ],
   declarations: [
     UsersListComponent,
+    ClientesListComponent,
+    ProveedoresListComponent,
   ],
 })
 export class ComponentsModule {}

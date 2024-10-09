@@ -22,7 +22,17 @@ export const navItems: NavItem[] = [
     route: '/components/usuarioslist',  // Actualiza la ruta aquí
   },
 
+  {
+    displayName: 'Clientes',//chips
+    iconName: 'poker-chip',
+    route: '/components/clientelist',
+  },
 
+  {
+    displayName: 'Proveedores',//chips
+    iconName: 'poker-chip',
+    route: '/components/proveedorlist',
+  },
 
 
 
