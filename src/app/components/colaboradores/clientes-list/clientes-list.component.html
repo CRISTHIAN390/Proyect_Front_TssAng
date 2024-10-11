@@ -56,9 +56,63 @@
       </div>
     </div>
   </mat-card-content>
-</mat-card>
-<!-- Modal Registrar -->
-<div *ngIf="isModalOpen" class="modal-container">
+
+  <!--Modal Registrar -->
+  <div *ngIf="isModalOpen" class="modal-container">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Registrar Cliente</h2>
+        <button mat-icon-button (click)="closeModal()" aria-label="Cerrar">
+          <mat-icon>×</mat-icon>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
+          <div>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <mat-label>Apellidos</mat-label>
+              <input matInput type="text" formControlName="apellidos">
+              <mat-error *ngIf="clientForm.get('apellidos')?.invalid && clientForm.get('apellidos')?.touched">
+                Apellidos es requerido.
+              </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <mat-label>Nombres</mat-label>
+              <input matInput type="text" formControlName="nombres">
+              <mat-error *ngIf="clientForm.get('nombres')?.invalid && clientForm.get('nombres')?.touched">
+                Nombres es requerido.
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <mat-label>Dni</mat-label>
+              <input matInput formControlName="dni" maxlength="8" minlength="8" (keypress)="onlyNumber($event)" />
+              <mat-error *ngIf="clientForm.get('dni')?.invalid">El DNI debe tener 8 dígitos.</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="w-100" color="primary">
+              <mat-label>Celular</mat-label>
+              <input matInput formControlName="celular" maxlength="9" (keypress)="onlyNumber($event)" />
+              <mat-error *ngIf="clientForm.get('celular')?.invalid">El celular debe tener 9 dígitos.</mat-error>
+            </mat-form-field>
+          </div>
+          <mat-form-field appearance="outline" class="w-100" color="primary">
+            <mat-label>Preferencias</mat-label>
+            <input matInput formControlName="preferencias"
+            />
+            <mat-error *ngIf="clientForm.get('preferencias')?.invalid">Este campo es requerido.</mat-error>
+          </mat-form-field>
+
+          <button mat-raised-button type="submit" [disabled]="!clientForm.valid">Guardar</button>
+
+        </form>
+        <!-- Mensaje de error -->
+        <mat-error *ngIf="errorMessage">{{ errorMessage }}</mat-error>
+      </div>
+    </div>
+  </div>
+
+  <!--<div *ngIf="isModalOpen" class="modal-container">
   <div class="modal-content">
     <div class="modal-header" style="display: flex; align-items: center; justify-content: space-between;">
       <h2 style="margin: 0; font-size: 1.5rem; color: #1631cf;">Registrar Cliente</h2>
@@ -126,4 +180,5 @@
       </form>
     </div>
   </div>
-</div>
+</div>-->
+</mat-card>

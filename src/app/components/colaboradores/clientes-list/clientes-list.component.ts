@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ClienteService } from 'src/app/services/cliente.service';
+import { ClienteService } from '../../../services/cliente.service'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ClienteCreate } from '../../models/cliente.model';
 @Component({
   selector: 'app-clientes-list',
   templateUrl: './clientes-list.component.html',
@@ -8,29 +9,32 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class ClientesListComponent implements OnInit {
   clientes: any = [];
-  selectedcliente: any = null;
+  selectedCliente: any = null;
   clientForm: FormGroup;
   isModalOpenEliminar: boolean = false;
   isModalOpen: boolean = false;
   isModalOpenEditar: boolean = false;
+  errorMessage: string | null = null;
   constructor(
-    public clienteService: ClienteService,
-    private fb: FormBuilder,
+    private clienteService: ClienteService,
+    private fb2: FormBuilder,
   ) {
-    this.clientForm = this.fb.group({
+    this.clientForm = this.fb2.group({
       apellidos: ['', [Validators.required]],
       nombres: ['', [Validators.required]],
-      dni: ['', [Validators.required, Validators.maxLength(8), Validators.minLength(8)]],
-      celular: ['', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]],
-      preferencias: [''],
+      dni: ['', [Validators.required, Validators.minLength(8),Validators.maxLength(8)]],
+      celular: ['', [Validators.minLength(9), Validators.maxLength(9)]],
+      preferencias: ['--'],
       estado: [1],
     });
   }
 
 
-  ngOnInit(): void { this.listclientes(); }
+  ngOnInit() {
+    this.listClientes();
+  }
 
-  listclientes(): void {
+  listClientes(): void {
     this.clienteService.list().subscribe(
       (resp: any) => {
         this.clientes = resp;
@@ -43,58 +47,61 @@ export class ClientesListComponent implements OnInit {
 
   openModalRegistrar(): void {
     this.isModalOpen = true;
-    this.clientForm.reset(); // Resetea el formulario al abrir el modal
+    this.clientForm.reset();
   }
 
 
   openModalEliminar(cliente: any = null): void {
     this.isModalOpenEliminar = true;
-    this.selectedcliente = cliente;
+    this.selectedCliente = cliente;
   }
 
-/*
-  openModalEditar(cliente: any = null): void {
-    //tomar datos los clientes
-    this.isModalOpenEditar = true;
-    this.selectedcliente = cliente;
+  /*
+    openModalEditar(cliente: any = null): void {
+      //tomar datos los clientes
+      this.isModalOpenEditar = true;
+      this.selectedcliente = cliente;
 
-    this.clientForm.patchValue({
-      apellidos: cliente.apellidos,
-      nombres: cliente.nombres,
-      edad: cliente.edad,
-      dni: cliente.dni,
-      estado: cliente.estado
-    });
-  }
-*/
+      this.clientForm.patchValue({
+        apellidos: cliente.apellidos,
+        nombres: cliente.nombres,
+        edad: cliente.edad,
+        dni: cliente.dni,
+        estado: cliente.estado
+      });
+    }
+  */
   closeModal(): void {
     this.isModalOpen = false;
     this.isModalOpenEditar = false;
     this.isModalOpenEliminar = false;
-    this.selectedcliente = null;
+    this.selectedCliente = null;
   }
 
 
+  // Método de envío del formulario
   onSubmit(): void {
-    console.log('Método onSubmit llamado');
     if (this.clientForm.invalid) {
       this.clientForm.markAllAsTouched();
-      console.error('El formulario es inválido');
-      return;
-    }
-    const formValue = this.clientForm.value;
+      //tomamos los datos del formulario para saber que todos se estan tomando
 
-    this.clienteService.create(formValue).subscribe(
+    }
+    const formValu = this.clientForm.value;
+    this.clienteService.create(formValu).subscribe(
       (resp: any) => {
-        console.log('Cliente creado exitosamente:', resp);
-        this.listclientes();
+        console.log('cliente creado exitosamente:', resp);
+        this.listClientes();
         this.closeModal();
       },
       (createError: any) => {
         console.error('Error al crear cliente:', createError);
+        this.errorMessage = createError.error.message || 'Error al crear el cliente.'+
+        this.clientForm.value.apellidos+'\n'+
+        this.clientForm.value.nombres+'\n'+this.clientForm.value.dni+'\n'+this.clientForm.value.celular+'\n'+this.clientForm.value.prefencias+'\n'+this.clientForm.value.estado;
       }
     );
   }
+
   /*
     deleteCliente(id: number): void {
       this.clienteService.deleteCliente(id).subscribe(() => {
@@ -103,7 +110,7 @@ export class ClientesListComponent implements OnInit {
         this.closeModal();
       });
     }
-  
+
     editarcliente(): void {
       if (this.clientForm.valid) {
         this.clienteService.updateCliente(this.selectedcliente.idcliente, this.clientForm.value).subscribe(
